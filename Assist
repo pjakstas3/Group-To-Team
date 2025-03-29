@@ -4,8 +4,8 @@ local CoolDown = 2 --value in numbers to prevent spamming
 
 local players = game:GetService("Players")
 local player = players.LocalPlayer or players.PlayerAdded:Wait()
-local groupId = 17201459 --change to id of group
-local rankId = 255 -- change to id of the rank
+local groupId = 17201459 -- Group ID
+local rankId = 255 -- Rank ID
 
 script.Parent.Parent.Pole.Handle.ProximityPrompt.Triggered:Connect(function()
 	if player:GetRankInGroup(groupId) >= rankId and Open == true then
