@@ -1,0 +1,62 @@
+local Open = false
+
+local CoolDown = 2 --value in numbers to prevent spamming
+
+local players = game:GetService("Players")
+local player = players.LocalPlayer or players.PlayerAdded:Wait()
+local groupId = 17201459 --change to id of group
+local rankId = 255 -- change to id of the rank
+
+script.Parent.Parent.Pole.Handle.ProximityPrompt.Triggered:Connect(function()
+	if player:GetRankInGroup(groupId) >= rankId and Open == true then
+		
+		Open = false
+		
+		script.Parent.Parent.Pole.Handle.ProximityPrompt.ActionText = "moving..."
+		script.Parent.Axle.Motor.DesiredAngle = 0
+		script.Parent.Parent.Ramp.Emitter.Noise1:Play()
+		script.Parent.Parent.Pole.Handle.ProximityPrompt.Enabled = false
+
+		wait(1.5)
+
+		script.Parent.Parent.Pole.Green.Light.Enabled=true
+		script.Parent.Parent.Pole.Red.Light.Enabled=false
+
+		script.Parent.Parent.Pole.Green.Material = "Neon"
+		script.Parent.Parent.Pole.Red.Material = "SmoothPlastic"
+
+		script.Parent.Parent.Pole.Green.Color = Color3.fromRGB(0, 255, 0)
+		script.Parent.Parent.Pole.Red.Color = Color3.fromRGB(56, 56, 56)
+		
+		
+		wait(CoolDown)
+		
+		script.Parent.Parent.Pole.Handle.ProximityPrompt.Enabled = true
+		script.Parent.Parent.Pole.Handle.ProximityPrompt.ActionText = "Extract Barrier"
+	else
+		Open = true
+		
+		script.Parent.Parent.Pole.Handle.ProximityPrompt.ActionText = "moving..."
+		script.Parent.Parent.Pole.Handle.ProximityPrompt.Enabled = true
+		
+		script.Parent.Axle.Motor.DesiredAngle = .6
+		script.Parent.Parent.Ramp.Emitter.Noise:Play()
+
+		script.Parent.Parent.Pole.Green.Material = "SmoothPlastic"
+		script.Parent.Parent.Pole.Red.Material = "Neon"
+
+		script.Parent.Parent.Pole.Green.Light.Enabled=false
+		script.Parent.Parent.Pole.Red.Light.Enabled=true
+
+		script.Parent.Parent.Pole.Green.Color = Color3.fromRGB(56, 56, 56)
+		script.Parent.Parent.Pole.Red.Color = Color3.fromRGB(255, 47, 47)
+
+		script.Parent.Parent.Pole.Handle.ProximityPrompt.Enabled = false
+
+		wait(CoolDown)
+		
+		script.Parent.Parent.Pole.Handle.ProximityPrompt.Enabled = true
+		script.Parent.Parent.Pole.Handle.ProximityPrompt.ActionText = "Retract Barrier"
+		
+	end
+end)
